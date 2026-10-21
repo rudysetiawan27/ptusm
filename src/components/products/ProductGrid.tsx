@@ -1,0 +1,66 @@
+'use client';
+
+import { Product } from '@/types/product';
+import ProductCard from './ProductCard';
+import { useState } from 'react';
+
+type Language = 'id' | 'en';
+
+interface ProductGridProps {
+  products: Product[];
+  showPrice?: boolean;
+}
+
+export default function ProductGrid({ products, showPrice = false }: ProductGridProps) {
+  const [locale] = useState<Language>('id');
+
+  const text = {
+    noProducts: {
+      id: 'Tidak ada produk ditemukan',
+      en: 'No products found',
+    },
+    productsFound: {
+      id: (count: number) => `${count} produk ditemukan`,
+      en: (count: number) => `${count} products found`,
+    },
+  };
+
+  if (products.length === 0) {
+    return (
+      <div className="text-center py-12">
+        <div className="text-gray-400 mb-4">
+          <svg
+            className="w-16 h-16 mx-auto"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
+            />
+          </svg>
+        </div>
+        <p className="text-gray-600 text-lg">{text.noProducts[locale]}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      {/* Product Count */}
+      <div className="mb-4 text-sm text-gray-600">
+        {text.productsFound[locale](products.length)}
+      </div>
+
+      {/* Product Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} showPrice={showPrice} />
+        ))}
+      </div>
+    </div>
+  );
+}
