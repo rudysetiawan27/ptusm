@@ -134,14 +134,19 @@ export default async function AccountPage({
                 <div>
                   <dt className="text-gray-500">{t('registeredAt')}</dt>
                   <dd className="font-medium text-gray-800">
-                    {new Date(company.created_at).toLocaleDateString('id-ID')}
+                    {new Date(company.created_at).toLocaleDateString('id-ID', {
+                      timeZone: 'Asia/Jakarta',
+                    })}
                   </dd>
                 </div>
                 {company.approved_at && (
                   <div>
                     <dt className="text-gray-500">{t('approvedAt')}</dt>
                     <dd className="font-medium text-gray-800">
-                      {new Date(company.approved_at).toLocaleDateString('id-ID')}
+                      {new Date(company.approved_at).toLocaleDateString(
+                        'id-ID',
+                        { timeZone: 'Asia/Jakarta' }
+                      )}
                     </dd>
                   </div>
                 )}

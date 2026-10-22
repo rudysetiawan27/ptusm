@@ -85,7 +85,12 @@ export default async function OrdersPage({
                       <td className="px-4 py-3 text-gray-600">
                         {new Date(order.createdAt).toLocaleDateString(
                           locale === 'id' ? 'id-ID' : 'en-GB',
-                          { day: '2-digit', month: 'short', year: 'numeric' }
+                          {
+                            day: '2-digit',
+                            month: 'short',
+                            year: 'numeric',
+                            timeZone: 'Asia/Jakarta',
+                          }
                         )}
                       </td>
                       <td className="px-4 py-3 text-right text-gray-600">

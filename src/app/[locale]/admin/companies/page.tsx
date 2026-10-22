@@ -89,7 +89,10 @@ export default async function AdminCompaniesPage({
                         </p>
                         <p className="text-gray-500">
                           {company.city} · {t('registeredAt')}:{' '}
-                          {new Date(company.created_at).toLocaleDateString('id-ID')}
+                          {new Date(company.created_at).toLocaleDateString(
+                            'id-ID',
+                            { timeZone: 'Asia/Jakarta' }
+                          )}
                         </p>
                       </div>
                       <CompanyActions companyId={company.id} />

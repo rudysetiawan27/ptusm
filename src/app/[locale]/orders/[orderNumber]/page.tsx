@@ -63,7 +63,12 @@ export default async function OrderDetailPage({
           <p className="text-white/80">
             {new Date(order.createdAt).toLocaleDateString(
               locale === 'id' ? 'id-ID' : 'en-GB',
-              { day: '2-digit', month: 'long', year: 'numeric' }
+              {
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric',
+                timeZone: 'Asia/Jakarta',
+              }
             )}
           </p>
         </div>
