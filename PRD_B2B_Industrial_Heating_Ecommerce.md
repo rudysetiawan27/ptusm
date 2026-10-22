@@ -1,6 +1,6 @@
 # Product Requirements Document (PRD)
 
-## B2B E-Commerce Website --- Industrial Heating Equipment
+## B2B E-Commerce Website --- United Heater Equipment
 
 **Versi:** 1.0\
 **Status:** Draft awal untuk pengembangan bertahap\

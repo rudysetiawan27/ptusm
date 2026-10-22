@@ -2,10 +2,8 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { useLocale, useTranslations } from 'next-intl';
 import { Product } from '@/types/product';
-import { useState } from 'react';
-
-type Language = 'id' | 'en';
 
 interface ProductCardProps {
   product: Product;
@@ -13,29 +11,23 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, showPrice = false }: ProductCardProps) {
-  const [locale] = useState<Language>('id');
+  const locale = useLocale() as 'id' | 'en';
+  const t = useTranslations('product');
 
-  const text = {
-    loginToViewPrice: {
-      id: 'Login untuk melihat harga',
-      en: 'Log in to view pricing',
-    },
-    viewDetails: {
-      id: 'Lihat Detail',
-      en: 'View Details',
-    },
-    inStock: {
-      id: 'Tersedia',
-      en: 'In Stock',
-    },
-  };
+  const primaryImage =
+    product.images.find((img) => img.isPrimary) ??
+    product.images[0] ?? {
+      url: 'https://placehold.co/600x400/E5E7EB/6B7280?text=No+Image',
+      alt: { id: 'Gambar tidak tersedia', en: 'Image not available' },
+      isPrimary: true,
+    };
 
-  const primaryImage = product.images.find((img) => img.isPrimary) || product.images[0];
+  const canShowPrice = showPrice && product.price !== null;
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
       {/* Product Image */}
-      <Link href={`/products/${product.slug}`}>
+      <Link href={`/${locale}/products/${product.slug}`}>
         <div className="relative aspect-[4/3] bg-light-gray">
           <Image
             src={primaryImage.url}
@@ -57,7 +49,7 @@ export default function ProductCard({ product, showPrice = false }: ProductCardP
         <p className="text-xs text-gray-500 mb-1">{product.sku}</p>
 
         {/* Product Name */}
-        <Link href={`/products/${product.slug}`}>
+        <Link href={`/${locale}/products/${product.slug}`}>
           <h3 className="font-semibold text-navy text-lg mb-2 hover:text-orange transition-colors line-clamp-2">
             {product.name[locale]}
           </h3>
@@ -78,20 +70,21 @@ export default function ProductCard({ product, showPrice = false }: ProductCardP
 
         {/* Price or Login CTA */}
         <div className="mb-3">
-          {showPrice ? (
+          {canShowPrice ? (
             <div>
               <p className="text-2xl font-bold text-navy">
-                Rp {product.price.toLocaleString('id-ID')}
+                Rp {product.price!.toLocaleString('id-ID')}
               </p>
               <p className="text-xs text-gray-500">per {product.unit}</p>
               <p className="text-sm text-green-600 mt-1">
-                ✓ {text.inStock[locale]}
+                ✓ {t('inStock')} ({product.stock ?? 0} {product.unit})
               </p>
+              <p className="text-xs text-orange mt-1">{t('demoPriceNote')}</p>
             </div>
           ) : (
             <div className="bg-light-gray border border-gray-200 rounded p-3 text-center">
               <p className="text-sm text-gray-700 font-medium">
-                {text.loginToViewPrice[locale]}
+                {t('loginToViewPrice')}
               </p>
             </div>
           )}
@@ -99,10 +92,10 @@ export default function ProductCard({ product, showPrice = false }: ProductCardP
 
         {/* View Details Button */}
         <Link
-          href={`/products/${product.slug}`}
+          href={`/${locale}/products/${product.slug}`}
           className="block w-full text-center px-4 py-2 bg-navy text-white rounded hover:bg-orange transition-colors"
         >
-          {text.viewDetails[locale]}
+          {t('viewDetails')}
         </Link>
       </div>
     </div>

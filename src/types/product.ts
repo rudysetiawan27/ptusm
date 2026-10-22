@@ -31,9 +31,10 @@ export type Product = {
     };
     isPrimary: boolean;
   }[];
-  // Harga dan stok - hanya untuk pengguna yang approved
-  price: number;
-  stock: number;
+  // Harga dan stok: null bila pengguna belum login / belum approved.
+  // Nilai ini hanya diisi server setelah lolos pengecekan (PRD 12.1).
+  price: number | null;
+  stock: number | null;
   unit: string;
 };
 

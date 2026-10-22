@@ -1,37 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
-
-type Language = 'id' | 'en';
+import { useLocale, useTranslations } from 'next-intl';
 
 export default function Footer() {
-  const [locale] = useState<Language>('id');
-
-  const footer = {
-    company: { id: 'Perusahaan', en: 'Company' },
-    about: { id: 'Tentang Kami', en: 'About Us' },
-    contact: { id: 'Kontak', en: 'Contact' },
-    products: { id: 'Produk', en: 'Products' },
-    legal: { id: 'Legal', en: 'Legal' },
-    privacy: { id: 'Kebijakan Privasi', en: 'Privacy Policy' },
-    terms: { id: 'Syarat & Ketentuan', en: 'Terms & Conditions' },
-    contactInfo: { id: 'Informasi Kontak', en: 'Contact Information' },
-    email: 'info@industrialheating.com',
-    phone: '+62 21 1234 5678',
-    address: {
-      id: 'Jakarta, Indonesia',
-      en: 'Jakarta, Indonesia',
-    },
-    copyright: {
-      id: '© 2024 Industrial Heating. Semua hak dilindungi.',
-      en: '© 2024 Industrial Heating. All rights reserved.',
-    },
-    placeholder: {
-      id: '⚠️ Ini adalah placeholder identitas perusahaan',
-      en: '⚠️ This is a company identity placeholder',
-    },
-  };
+  const locale = useLocale();
+  const t = useTranslations('footer');
 
   return (
     <footer className="bg-navy text-white mt-auto">
@@ -43,39 +17,39 @@ export default function Footer() {
               <div className="bg-orange px-3 py-1 rounded">
                 <span className="text-white font-bold text-xl">IH</span>
               </div>
-              <span className="font-semibold">Industrial Heating</span>
+              <span className="font-semibold">United Heater</span>
             </div>
             <p className="text-sm text-white/70 mb-2">
-              {footer.placeholder[locale]}
+              {t('placeholder')}
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="font-semibold mb-3">{footer.company[locale]}</h3>
+            <h3 className="font-semibold mb-3">{t('company')}</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
-                  href="/about"
+                  href={`/${locale}/about`}
                   className="text-white/70 hover:text-orange transition-colors"
                 >
-                  {footer.about[locale]}
+                  {t('aboutUs')}
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/products"
+                  href={`/${locale}/products`}
                   className="text-white/70 hover:text-orange transition-colors"
                 >
-                  {footer.products[locale]}
+                  {t('products')}
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/contact"
+                  href={`/${locale}/contact`}
                   className="text-white/70 hover:text-orange transition-colors"
                 >
-                  {footer.contact[locale]}
+                  {t('contact')}
                 </Link>
               </li>
             </ul>
@@ -83,28 +57,28 @@ export default function Footer() {
 
           {/* Contact & Legal */}
           <div>
-            <h3 className="font-semibold mb-3">{footer.contactInfo[locale]}</h3>
+            <h3 className="font-semibold mb-3">{t('contactInfo')}</h3>
             <ul className="space-y-2 text-sm text-white/70 mb-4">
-              <li>{footer.email}</li>
-              <li>{footer.phone}</li>
-              <li>{footer.address[locale]}</li>
+              <li>{t('email')}</li>
+              <li>{t('phone')}</li>
+              <li>{t('address')}</li>
             </ul>
-            <h3 className="font-semibold mb-3">{footer.legal[locale]}</h3>
+            <h3 className="font-semibold mb-3">{t('legal')}</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link
-                  href="/privacy"
+                  href={`/${locale}/privacy`}
                   className="text-white/70 hover:text-orange transition-colors"
                 >
-                  {footer.privacy[locale]}
+                  {t('privacy')}
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/terms"
+                  href={`/${locale}/terms`}
                   className="text-white/70 hover:text-orange transition-colors"
                 >
-                  {footer.terms[locale]}
+                  {t('terms')}
                 </Link>
               </li>
             </ul>
@@ -113,7 +87,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="border-t border-white/10 mt-8 pt-6 text-center text-sm text-white/70">
-          {footer.copyright[locale]}
+          {t('copyright')}
         </div>
       </div>
     </footer>

@@ -1,10 +1,8 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { Product } from '@/types/product';
 import ProductCard from './ProductCard';
-import { useState } from 'react';
-
-type Language = 'id' | 'en';
 
 interface ProductGridProps {
   products: Product[];
@@ -12,18 +10,7 @@ interface ProductGridProps {
 }
 
 export default function ProductGrid({ products, showPrice = false }: ProductGridProps) {
-  const [locale] = useState<Language>('id');
-
-  const text = {
-    noProducts: {
-      id: 'Tidak ada produk ditemukan',
-      en: 'No products found',
-    },
-    productsFound: {
-      id: (count: number) => `${count} produk ditemukan`,
-      en: (count: number) => `${count} products found`,
-    },
-  };
+  const t = useTranslations('product');
 
   if (products.length === 0) {
     return (
@@ -43,7 +30,7 @@ export default function ProductGrid({ products, showPrice = false }: ProductGrid
             />
           </svg>
         </div>
-        <p className="text-gray-600 text-lg">{text.noProducts[locale]}</p>
+        <p className="text-gray-600 text-lg">{t('noProducts')}</p>
       </div>
     );
   }
@@ -52,7 +39,7 @@ export default function ProductGrid({ products, showPrice = false }: ProductGrid
     <div>
       {/* Product Count */}
       <div className="mb-4 text-sm text-gray-600">
-        {text.productsFound[locale](products.length)}
+        {t('productsFound', { count: products.length })}
       </div>
 
       {/* Product Grid */}
